@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Suspense } from "react";
+import React, { useEffect, useRef, useState, Suspense, forwardRef } from "react";
 import { motion, Variants, useMotionValue, useSpring } from "framer-motion"; // Animations + cursor spring
 import {
     SignedIn,
@@ -84,7 +84,9 @@ function LazyMount({ children, rootMargin = "150px" }: { children: React.ReactNo
  * installed. Flip `hasSpline` to true after installing to enable the 3D scene.
  */
 const SplineLazy = React.lazy(() =>
-    import("@splinetool/react-spline").catch(() => ({ default: () => null }))
+    import("@splinetool/react-spline").catch(() => ({
+        default: forwardRef<HTMLDivElement, any>((props, ref) => null)
+    }))
 );
 const hasSpline = false; // set to true after: npm i @splinetool/react-spline
 
@@ -159,7 +161,7 @@ export default function Home() {
                         <a
                             href="https://github.com/"
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noreferrer noopener"
                             className="hidden sm:inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-md px-2 py-1"
                         >
                             <Github className="h-4 w-4" aria-hidden /> Star
